@@ -1,20 +1,35 @@
-import React from "react";
+import React, { Dispatch, SetStateAction, ChangeEventHandler } from "react";
 import { IApplication } from "../../../types/data";
 import styles from "./Applications.module.css";
 import Checkbox from "../../common/inputs/Checkbox/Checkbox";
 
 interface IApplicationsProps {
   data?: IApplication[];
+  checked: boolean[];
+  setChecked: Dispatch<SetStateAction<boolean[]>>;
 }
 
-function Applications({ data }: IApplicationsProps) {
+function Applications({ data, checked, setChecked }: IApplicationsProps) {
+  const handleCheck = (index: number, check: boolean) => {
+    setChecked((prevState) => {
+      const _prev = [...prevState];
+      _prev[index] = check;
+      return _prev;
+    });
+  };
+
+  const checkAll: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = e.target.checked;
+    setChecked(Array(checked.length).fill(value));
+  };
+
   return (
     <div className={styles.container}>
       <table className={`${styles.table}`}>
         <thead className={styles.thead}>
           <tr>
             <th>
-              <Checkbox className={styles.checkbox} />
+              <Checkbox className={styles.checkbox} onChange={checkAll} />
             </th>
             <th>NO</th>
             <th>기존유형</th>
@@ -28,7 +43,7 @@ function Applications({ data }: IApplicationsProps) {
         </thead>
         {Array.isArray(data) && data.length > 0 && (
           <tbody>
-            {data?.map((datum) => {
+            {data?.map((datum, index) => {
               const {
                 no,
                 existingType,
@@ -69,6 +84,10 @@ function Applications({ data }: IApplicationsProps) {
                     <Checkbox
                       disabled={approval !== "승인대기"}
                       className={styles.checkbox}
+                      checked={checked[index]}
+                      onChange={(e) =>
+                        handleCheck(index, e.currentTarget.checked)
+                      }
                     />
                   </td>
                   <td>{no}</td>

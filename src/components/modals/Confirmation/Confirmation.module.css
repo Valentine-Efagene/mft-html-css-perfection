@@ -1,0 +1,40 @@
+.container {
+  width: 400px;
+  height: 198px;
+}
+
+.content {
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.content > span {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  color: #0b101a;
+}
+
+.content > button {
+  margin-inline: auto;
+  width: 40%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.buttons > button:nth-child(2) {
+  margin-left: 1.25rem;
+}
+
+.buttons > button {
+  width: 42.5%;
+}

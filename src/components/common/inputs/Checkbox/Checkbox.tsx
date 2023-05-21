@@ -16,6 +16,7 @@ function Checkbox({
   style,
   disabled,
   value,
+  checked,
   onChange,
 }: ICheckboxProps) {
   return (
@@ -24,6 +25,7 @@ function Checkbox({
         hidden
         defaultValue={defaultValue}
         value={value}
+        checked={checked}
         type="checkbox"
         name={name}
         id={id}

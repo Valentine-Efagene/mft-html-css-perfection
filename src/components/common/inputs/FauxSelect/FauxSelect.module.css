@@ -52,7 +52,8 @@
   color: #000000;
 }
 
-.customArrow:icon {
+.customArrow .icon {
+  color: #5a616a;
 }
 
 .container .list {
