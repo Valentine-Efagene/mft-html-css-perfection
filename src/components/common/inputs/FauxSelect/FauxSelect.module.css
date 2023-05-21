@@ -1,0 +1,89 @@
+.container {
+  min-width: 150.15px;
+  --arrow-size: 0.5rem;
+  width: fit-content;
+  border-radius: 8px;
+  color: #0b101a;
+
+  display: block;
+  position: relative;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.container > * {
+  background: #ffffff;
+}
+
+.container .master {
+  position: relative;
+  user-select: none;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #b1b4bb;
+  padding: 10px 3rem 10px 12px;
+  border: none;
+  font-family: "Pretendard", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 19px;
+  letter-spacing: -0.02px;
+  cursor: pointer;
+  appearance: none;
+  background: #ffffff;
+  border: 1px solid #b1b4bb;
+  border-radius: 8px;
+  width: 100%;
+  color: #000000;
+  display: flex;
+}
+
+.customArrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2rem;
+  height: 100%;
+  pointer-events: none;
+  color: #000000;
+}
+
+.customArrow:icon {
+}
+
+.container .list {
+  display: block;
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 0 0;
+
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 8px 16px rgba(54, 54, 54, 0.15);
+}
+
+.container .list li {
+  padding: 6px 46px 6px 16px;
+  cursor: pointer;
+  background-color: #00000000;
+}
+
+.container .list li.active,
+.container .list li:hover {
+  background: #2a3958;
+  color: #ffffff;
+}
+
+.container .list li:hover {
+  background: #2a39585c;
+  color: #ffffff;
+}
+
+.container .list.hidden {
+  max-height: 0;
+  visibility: hidden;
+}

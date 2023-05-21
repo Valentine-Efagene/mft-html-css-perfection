@@ -1,0 +1,38 @@
+.container {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+
+  color: #ffffff;
+  padding: 0.7rem 1rem;
+
+  height: fit-content;
+  width: fit-content;
+  min-width: 100px;
+}
+
+.primary {
+  background: #2a3958;
+  border-radius: 10px;
+  color: #ffffff;
+  border: none;
+}
+
+.secondary {
+  padding: 10px 12px;
+  background: #ebeef3;
+  border: 1px solid #d7d8da;
+  border-radius: 8px;
+}
+
+.outline {
+  border: 1.5px solid #2a3958;
+  border-radius: 10px;
+  background-color: #00000000;
+}
+
+.underline {
+}

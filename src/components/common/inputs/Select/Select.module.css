@@ -1,0 +1,46 @@
+.container {
+  margin: auto;
+  position: relative;
+  --arrow-size: 0.5rem;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.container select {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #b1b4bb;
+  padding: 10px 3rem 10px 12px;
+  border: none;
+  font-family: "Pretendard", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.02px;
+  color: #0b101a;
+  cursor: pointer;
+  appearance: none;
+  padding-bottom: 0.2rem;
+}
+
+.container select > option {
+  background-color: transparent;
+}
+
+.customArrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2rem;
+  height: 100%;
+  pointer-events: none;
+  color: #000000;
+}
+
+.customArrow:icon {
+}

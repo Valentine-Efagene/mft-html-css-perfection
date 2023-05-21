@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-block: 2rem;
+}
+
+.heading {
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+  padding-left: 1.25rem;
+}
+
+.memberDetails {
+  margin-right: 1rem;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  color: #0b101a;
+}
+
+.required {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #ff4d4f;
+  position: relative;
+}
+
+.required::before {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #ff4d4f;
+  top: -0.4rem;
+  left: -0.4rem;
+  border-radius: 50%;
+}
