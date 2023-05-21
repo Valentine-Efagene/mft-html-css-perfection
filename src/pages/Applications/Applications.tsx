@@ -21,13 +21,18 @@ type modalName =
   | "alreadyDenied"
   | "saved";
 
-const LIMIT = 50;
+const TOTAL = 450;
 
 function Applications({ className, style }: IApplicationsProps) {
+  const [approval, setApproval] = useState<IOptionValue>("");
+  const [dateTime, setDateTime] = useState<IOptionValue>("신청일시순");
+  const [approvalStatus, setApprovalStatus] = useState<IOptionValue>("");
+  const [limit, setLimit] = useState<number>(50);
+
   const [activeModal, setActiveModal] = useState<modalName>("noApplicant");
   const [showModal, setShowModal] = useState(false);
   const [searchParams, _] = useSearchParams();
-  const [checked, setChecked] = useState(Array(LIMIT).fill(false));
+  const [checked, setChecked] = useState(Array(limit).fill(false));
 
   let _page: number = Number(searchParams.get("page")) ?? 1;
   _page = _page > 0 ? _page : 1;
@@ -90,21 +95,34 @@ function Applications({ className, style }: IApplicationsProps) {
     ),
   };
 
-  const [approval, setApproval] = useState<IOptionValue>("승인여부 전체");
-  const [dateTime, setDateTime] = useState<IOptionValue>("신청일시순");
-  const [approvalStatus, setApprovalStatus] =
-    useState<IOptionValue>("승인상태 변경");
+  const displayModal = () => setShowModal(true);
+
+  const selected: number = checked.filter((check) => check === true).length;
+
+  const checkSelected = () => {
+    if (selected < 1) {
+      setActiveModal("noApplicant");
+      setShowModal(true);
+    }
+  };
 
   const handleApprovalChange = (value: IOptionValue) => {
+    checkSelected();
     setApproval(value);
   };
 
   const handleApprovalStatusChange = (value: IOptionValue) => {
+    checkSelected();
     setApprovalStatus(value);
   };
 
   const handleApprovalDateTimeChange = (value: IOptionValue) => {
+    checkSelected();
     setDateTime(value);
+  };
+
+  const handleLimitChange = (value: IOptionValue) => {
+    setLimit(Number(value) ?? 50);
   };
 
   return (
@@ -117,7 +135,7 @@ function Applications({ className, style }: IApplicationsProps) {
         </div>
         <div className={styles.controls}>
           <FauxSelect onChange={handleApprovalChange} value={approval}>
-            <option value="승인여부 전체"></option>
+            <option value="">승인여부 전체</option>
             <option value="승인대기"></option>
             <option value="승인완료"></option>
             <option value="승인거부"></option>
@@ -126,27 +144,21 @@ function Applications({ className, style }: IApplicationsProps) {
             <option value="신청일시순"></option>
             <option value="승인일시순"></option>
           </FauxSelect>
-          <FauxSelect
-            onChange={handleApprovalStatusChange}
-            value={approvalStatus}
-          >
-            <option value="승인상태 변경"></option>
-            <option value="승인완료"></option>
-            <option value="승인거부"></option>
+          <FauxSelect onChange={handleLimitChange} value={limit}>
+            <option value={50}>승인상태 변경</option>
+            <option value={50}>승인상태 변경</option>
           </FauxSelect>
         </div>
       </div>
       <div className={styles.selectPanel}>
         <Button>등록</Button>
         <div className={styles.actions}>
-          <span className={styles.status}>
-            선택한 {checked.filter((check) => check === true).length} 건
-          </span>
+          <span className={styles.status}>선택한 {selected}건</span>
           <FauxSelect
             onChange={handleApprovalStatusChange}
             value={approvalStatus}
           >
-            <option value="승인상태 변경"></option>
+            <option value="">승인상태 변경</option>
             <option value="승인완료"></option>
             <option value="승인거부"></option>
           </FauxSelect>
@@ -164,9 +176,12 @@ function Applications({ className, style }: IApplicationsProps) {
       <ApplicationsTable
         checked={checked}
         setChecked={setChecked}
-        data={Array(50).fill(applications[0])}
+        data={Array(TOTAL)
+          .fill(applications[0])
+          .map((app, index) => ({ ...app, no: index + 1 }))
+          .slice((_page - 1) * limit, _page * limit)}
       />
-      <Paginator limit={5} page={_page} url="/applications" total={50} />
+      <Paginator limit={limit} page={_page} url="/applications" total={TOTAL} />
     </div>
   );
 }

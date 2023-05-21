@@ -8,6 +8,6 @@ interface tab {
   title: string;
 }
 
-type IOptionValue = string | number | undefined | null;
+type IOptionValue = string | number;
 
 export type { tab, IOPtion, IOptionValue };

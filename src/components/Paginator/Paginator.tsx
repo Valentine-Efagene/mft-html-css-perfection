@@ -43,7 +43,7 @@ function Paginator({ page, url, total, limit }: IPaginator) {
       {Array.from({ length: maxPage }, (_, i) => {
         const _page = i + 1;
         return (
-          <li>
+          <li key={_page}>
             <Link
               className={`${page === _page ? styles.active : ""} ${
                 styles.link

@@ -48,7 +48,7 @@ function Applications({ data, checked, setChecked }: IApplicationsProps) {
                 no,
                 existingType,
                 applicationType,
-                documentsToBeSubmitted,
+                //documentsToBeSubmitted,
                 applicationDate,
                 approval,
                 reasonForRefusalOfApproval,
@@ -79,7 +79,7 @@ function Applications({ data, checked, setChecked }: IApplicationsProps) {
               }
 
               return (
-                <tr>
+                <tr key={index}>
                   <td>
                     <Checkbox
                       disabled={approval !== "승인대기"}
