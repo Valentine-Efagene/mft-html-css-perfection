@@ -4,3 +4,73 @@
   gap: 1rem;
   padding: 1.25rem;
 }
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.title {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #0b101a;
+  margin-right: 0.5rem;
+}
+
+.info {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #5a616a;
+}
+
+.controls {
+  display: flex;
+}
+
+.controls > *:not(:first-child) {
+  margin-left: 0.5rem;
+}
+
+.selectPanel {
+  display: flex;
+  justify-content: space-between;
+}
+
+.selectPanel .actions {
+  display: flex;
+  align-items: center;
+}
+
+.selectPanel .actions > *:not(:first-child) {
+  margin-left: 0.5rem;
+}
+
+.selectPanel .status {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #5a616a;
+}
+
+@media screen and (max-width: 780px) {
+  .toolbar,
+  .selectPanel {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

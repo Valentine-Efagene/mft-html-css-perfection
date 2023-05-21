@@ -3,13 +3,16 @@
 }
 
 .container::-webkit-scrollbar-track {
-  background-color: transparent;
   transition: 2s all;
+  background: #e6e8ea;
+  border-radius: 20px;
+  transform: matrix(0, 1, 1, 0, 0, 0);
 }
 
 .container::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0);
-  border-bottom: 2px solid rgba(0, 0, 0, 0.263);
+  background: #6f80a0;
+  border-radius: 20px;
+  transform: matrix(0, 1, 1, 0, 0, 0);
   cursor: pointer;
 }
 
@@ -17,16 +20,21 @@
 }
 
 .container {
-  max-width: 100%;
-  margin: 0 auto;
-  overflow-x: auto;
+  background-color: #ffffff;
   display: block;
+  overflow-x: auto;
+  max-width: 100%;
+  width: 100%;
+}
+
+.container .table {
+  margin: 0 auto;
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
   line-height: 16px;
-  width: fit-content;
+  width: 100%;
 
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -34,6 +42,11 @@
   color: #222222;
   border-width: 0;
   border-spacing: 0;
+}
+
+.container thead,
+.container tbody {
+  width: 100%;
 }
 
 .approval {
@@ -143,9 +156,31 @@
 }
 
 .container .reasonForRefusalOfApproval {
-  min-width: 58ch;
+  max-width: 43ch;
+  width: 43ch;
+  min-width: 43ch;
   text-align: left;
 }
 
 .container table thead {
+}
+
+.empty {
+  width: 100%;
+  height: 400px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty > span {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 16px;
+  color: #a2a2a2;
+  white-space: nowrap;
+  text-align: center;
 }

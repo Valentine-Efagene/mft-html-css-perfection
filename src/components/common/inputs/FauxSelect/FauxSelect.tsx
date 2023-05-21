@@ -10,7 +10,7 @@ interface IFauxSelectProps {
   className?: string;
   style?: object;
   value?: IOptionValue;
-  defaultValue: string | number;
+  defaultValue?: string | number;
   onChange: (option: IOptionValue) => void;
   options?: IOPtion[];
   children?: ReactElement[];
@@ -105,7 +105,7 @@ function FauxSelect({
             ? children
                 ?.map((option) => {
                   const { value, children: title } = option.props;
-                  return { value, title };
+                  return { value, title: title ?? value };
                 })
                 .find((option) => option.value === value)?.title
             : children
@@ -135,7 +135,7 @@ function FauxSelect({
               tabIndex={0}
               onClick={() => handleChange(value)}
             >
-              {title}
+              {title ?? value}
             </li>
           );
         })}

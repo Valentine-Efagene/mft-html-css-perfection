@@ -56,10 +56,15 @@
 }
 
 .container .list {
+  z-index: 1;
   display: block;
   list-style: none;
   padding: 0;
   margin: 5px 0 0 0;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  position: absolute;
 
   border-radius: 8px;
   overflow: hidden;
