@@ -16,6 +16,7 @@
 }
 
 .container .master {
+  width: 100%;
   position: relative;
   user-select: none;
   border-radius: 8px;
@@ -64,7 +65,7 @@
   margin: 5px 0 0 0;
   top: 100%;
   left: 0;
-  width: 100%;
+  width: fit-content;
   position: absolute;
 
   border-radius: 8px;

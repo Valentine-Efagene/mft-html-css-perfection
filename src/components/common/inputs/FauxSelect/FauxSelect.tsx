@@ -9,11 +9,11 @@ interface IFauxSelectProps {
   id?: string;
   className?: string;
   style?: object;
-  value?: IOptionValue;
+  value: IOptionValue;
   defaultValue?: string | number;
   onChange: (option: IOptionValue) => void;
   options?: IOPtion[];
-  children?: ReactElement[];
+  children: ReactElement[] | ReactElement;
 }
 
 function FauxSelect({
@@ -25,6 +25,7 @@ function FauxSelect({
 }: IFauxSelectProps) {
   const [showOptions, setShowOptions] = useState(false);
   const ref = useRef<HTMLDivElement>();
+  const actualChildren = Array.isArray(children) ? children : [children];
 
   useOnClickOutside(ref as RefObject<HTMLDivElement>, () => {
     setShowOptions(false);
@@ -39,14 +40,14 @@ function FauxSelect({
   const hideSelect = () => setShowOptions(false);
 
   const getOptions = () => {
-    return children?.map((option) => {
+    return actualChildren?.map((option) => {
       const { value, children: title } = option.props;
       return { value, title };
     });
   };
 
   const getIndex = (value: IOptionValue) => {
-    return getOptions()?.findIndex((option) => option.value === value) ?? 0;
+    return getOptions()?.findIndex((option) => option?.value === value) ?? 0;
   };
 
   const [activeIndex, setActiveIndex] = useState(getIndex(value));
@@ -102,13 +103,13 @@ function FauxSelect({
       <button className={styles.master} onClick={toggleShowOptions}>
         <span className={styles.value}>
           {value && value.toString()?.length > 0
-            ? children
+            ? actualChildren
                 ?.map((option) => {
                   const { value, children: title } = option.props;
                   return { value, title: title ?? value };
                 })
                 .find((option) => option.value === value)?.title
-            : children
+            : actualChildren
                 ?.map((option) => {
                   const { value, children: title } = option.props;
                   return { value, title };
@@ -125,7 +126,7 @@ function FauxSelect({
         </span>
       </button>
       <ul className={`${showOptions ? "" : styles.hidden} ${styles.list}`}>
-        {children?.map((option, index) => {
+        {actualChildren?.map((option, index) => {
           const { value, children: title } = option.props;
           return (
             <li

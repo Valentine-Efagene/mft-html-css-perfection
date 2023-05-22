@@ -1,6 +1,6 @@
 import styles from "./Applications.module.css";
 import ApplicationsTable from "../../components/tables/Applications/Applications";
-import applications from "../../mock/applications";
+import _applications from "../../mock/applications";
 import Button from "../../components/common/inputs/Button/Button";
 import Paginator from "../../components/Paginator/Paginator";
 import { useSearchParams } from "react-router-dom";
@@ -24,7 +24,8 @@ type modalName =
 const TOTAL = 450;
 
 function Applications({ className, style }: IApplicationsProps) {
-  const [approval, setApproval] = useState<IOptionValue>("");
+  const [applications, setApplications] = useState(_applications);
+  const [approval, setApproval] = useState<IOptionValue>("승인여부 전체");
   const [dateTime, setDateTime] = useState<IOptionValue>("신청일시순");
   const [approvalStatus, setApprovalStatus] = useState<IOptionValue>("");
   const [limit, setLimit] = useState<number>(50);
@@ -32,7 +33,7 @@ function Applications({ className, style }: IApplicationsProps) {
   const [activeModal, setActiveModal] = useState<modalName>("noApplicant");
   const [showModal, setShowModal] = useState(false);
   const [searchParams, _] = useSearchParams();
-  const [checked, setChecked] = useState(Array(limit).fill(false));
+  const [checked, setChecked] = useState<boolean[]>(Array(limit).fill(false));
 
   let _page: number = Number(searchParams.get("page")) ?? 1;
   _page = _page > 0 ? _page : 1;
@@ -99,26 +100,66 @@ function Applications({ className, style }: IApplicationsProps) {
 
   const selected: number = checked.filter((check) => check === true).length;
 
-  const checkSelected = () => {
+  const checkSelected = (value: IOptionValue) => {
+    if (value === "") return;
+
     if (selected < 1) {
       setActiveModal("noApplicant");
-      setShowModal(true);
+      displayModal();
     }
   };
 
+  const resetApplications = () => setApplications(_applications);
+
   const handleApprovalChange = (value: IOptionValue) => {
-    checkSelected();
     setApproval(value);
+
+    if (value === "승인여부 전체") {
+      resetApplications();
+    } else {
+      setApplications(
+        _applications.filter((application) => application.approval === value)
+      );
+    }
   };
 
   const handleApprovalStatusChange = (value: IOptionValue) => {
-    checkSelected();
+    checkSelected(value);
     setApprovalStatus(value);
+
+    setApplications((prevState) => {
+      const _prev = [...prevState];
+
+      const result = _prev.map((application, index) => {
+        if (checked[index] === true) {
+          application.approval = value as string;
+          return application;
+        }
+
+        return application;
+      });
+
+      return result;
+    });
   };
 
   const handleApprovalDateTimeChange = (value: IOptionValue) => {
-    checkSelected();
     setDateTime(value);
+    setApplications((prevState) => {
+      if (value === "신청일시순") {
+        return prevState.sort(
+          (a, b) =>
+            new Date(a.applicationDate).getTime() -
+            new Date(b.applicationDate).getTime()
+        );
+      } else {
+        return prevState.sort(
+          (a, b) =>
+            new Date(a.approvalDate).getTime() -
+            new Date(b.approvalDate).getTime()
+        );
+      }
+    });
   };
 
   const handleLimitChange = (value: IOptionValue) => {
@@ -135,7 +176,7 @@ function Applications({ className, style }: IApplicationsProps) {
         </div>
         <div className={styles.controls}>
           <FauxSelect onChange={handleApprovalChange} value={approval}>
-            <option value="">승인여부 전체</option>
+            <option value="승인여부 전체"></option>
             <option value="승인대기"></option>
             <option value="승인완료"></option>
             <option value="승인거부"></option>
@@ -145,7 +186,6 @@ function Applications({ className, style }: IApplicationsProps) {
             <option value="승인일시순"></option>
           </FauxSelect>
           <FauxSelect onChange={handleLimitChange} value={limit}>
-            <option value={50}>승인상태 변경</option>
             <option value={50}>승인상태 변경</option>
           </FauxSelect>
         </div>
@@ -176,8 +216,7 @@ function Applications({ className, style }: IApplicationsProps) {
       <ApplicationsTable
         checked={checked}
         setChecked={setChecked}
-        data={Array(TOTAL)
-          .fill(applications[0])
+        data={applications
           .map((app, index) => ({ ...app, no: index + 1 }))
           .slice((_page - 1) * limit, _page * limit)}
       />
