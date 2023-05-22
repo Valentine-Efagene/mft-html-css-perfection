@@ -1,0 +1,35 @@
+.container {
+  width: 90%;
+  padding-inline: 0;
+}
+
+.content {
+  border-top: 1px solid #d7d8da;
+}
+
+.header {
+  padding-inline: 1.25rem;
+  padding-bottom: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+}
+
+.header .closeBtn {
+  border: none;
+  font-size: 12px;
+  color: #667085;
+  background-color: #00000000;
+}
+
+.content {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.02px;
+  color: #0b101a;
+}

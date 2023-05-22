@@ -1,6 +1,9 @@
 import styles from "./Applications.module.css";
 import ApplicationsTable from "../../components/tables/Applications/Applications";
-import _applications from "../../mock/applications";
+import {
+  applications as _applications,
+  //noneFound as _applications,
+} from "../../mock/applications";
 import Button from "../../components/common/inputs/Button/Button";
 import Paginator from "../../components/Paginator/Paginator";
 import { useSearchParams } from "react-router-dom";
@@ -8,6 +11,9 @@ import FauxSelect from "../../components/common/inputs/FauxSelect/FauxSelect";
 import { IOptionValue } from "../../types/inputs";
 import { ReactNode, useState } from "react";
 import Confirmation from "../../components/modals/Confirmation/Confirmation";
+import { IApplication } from "../../types/data";
+
+import InvestmentTypeChange from "../../components/modals/InvestmentTypeChange/InvestmentTypeChange";
 
 interface IApplicationsProps {
   className?: string;
@@ -21,10 +27,11 @@ type modalName =
   | "alreadyDenied"
   | "saved";
 
-const TOTAL = 450;
+const TOTAL = _applications.length;
 
 function Applications({ className, style }: IApplicationsProps) {
-  const [applications, setApplications] = useState(_applications);
+  const [applications, setApplications] =
+    useState<IApplication[]>(_applications);
   const [approval, setApproval] = useState<IOptionValue>("승인여부 전체");
   const [dateTime, setDateTime] = useState<IOptionValue>("신청일시순");
   const [approvalStatus, setApprovalStatus] = useState<IOptionValue>("");
@@ -33,7 +40,9 @@ function Applications({ className, style }: IApplicationsProps) {
   const [activeModal, setActiveModal] = useState<modalName>("noApplicant");
   const [showModal, setShowModal] = useState(false);
   const [searchParams, _] = useSearchParams();
-  const [checked, setChecked] = useState<boolean[]>(Array(limit).fill(false));
+  const _checked = Array(limit).fill(false);
+  const [checked, setChecked] = useState<boolean[]>(_checked);
+  const resetChecks = () => setChecked(_checked);
 
   let _page: number = Number(searchParams.get("page")) ?? 1;
   _page = _page > 0 ? _page : 1;
@@ -57,7 +66,10 @@ function Applications({ className, style }: IApplicationsProps) {
         className={styles.container}
         show={showModal}
         onCancel={hideModal}
-        onConfirm={hideModal}
+        onConfirm={() => {
+          save();
+          hideModal();
+        }}
         type="warning"
         confirmationPrompt="확인"
         cancellationPrompt="취소"
@@ -111,6 +123,29 @@ function Applications({ className, style }: IApplicationsProps) {
 
   const resetApplications = () => setApplications(_applications);
 
+  const save = () => {
+    setApplications((prevState) => {
+      const _prev = [...prevState];
+
+      const result = _prev.map((application, index) => {
+        if (checked[index] === true) {
+          application.approval = approvalStatus as string;
+          return application;
+        }
+
+        return application;
+      });
+
+      return result;
+    });
+
+    resetChecks();
+  };
+
+  /**
+   * Filter
+   * @param value
+   */
   const handleApprovalChange = (value: IOptionValue) => {
     setApproval(value);
 
@@ -123,26 +158,19 @@ function Applications({ className, style }: IApplicationsProps) {
     }
   };
 
+  /**
+   * Edit
+   * @param value
+   */
   const handleApprovalStatusChange = (value: IOptionValue) => {
     checkSelected(value);
     setApprovalStatus(value);
-
-    setApplications((prevState) => {
-      const _prev = [...prevState];
-
-      const result = _prev.map((application, index) => {
-        if (checked[index] === true) {
-          application.approval = value as string;
-          return application;
-        }
-
-        return application;
-      });
-
-      return result;
-    });
   };
 
+  /**
+   * Sort
+   * @param value
+   */
   const handleApprovalDateTimeChange = (value: IOptionValue) => {
     setDateTime(value);
     setApplications((prevState) => {
@@ -168,11 +196,24 @@ function Applications({ className, style }: IApplicationsProps) {
 
   return (
     <div className={`${styles.container} ${className}`} style={style}>
+      <InvestmentTypeChange
+        show={true}
+        application={applications[0]}
+        onCancel={() => console.log("first")}
+      />
       {modalMap[activeModal]}
       <div className={styles.toolbar}>
         <div className={styles.titleWrapper}>
           <span className={styles.title}>신청 목록</span>
-          <span className={styles.info}>(총 100명 | 승인대기 1건)</span>
+          <span className={styles.info}>
+            (총 {_applications.length}명 | 승인대기{" "}
+            {
+              _applications.filter(
+                (application) => application.approval === "승인대기"
+              ).length
+            }
+            건)
+          </span>
         </div>
         <div className={styles.controls}>
           <FauxSelect onChange={handleApprovalChange} value={approval}>
@@ -204,8 +245,8 @@ function Applications({ className, style }: IApplicationsProps) {
           </FauxSelect>
           <Button
             onClick={() => {
-              setActiveModal("noApplicant");
-              setShowModal(true);
+              setActiveModal("changeApprovalStatus");
+              displayModal();
             }}
           >
             저장

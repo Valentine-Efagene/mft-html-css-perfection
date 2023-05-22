@@ -1,0 +1,46 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 1rem;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #0b101a;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+}
+
+.left {
+  background: #eef0f4;
+}
+
+.left,
+.right {
+  display: flex;
+  align-items: center;
+  padding-block: 1rem;
+  justify-content: flex-start;
+  border-radius: 0px;
+  padding-left: 1rem;
+}
+
+.titleSpan {
+  position: relative;
+}
+
+.titleSpan.required::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #ff4d4f;
+  top: 0;
+  right: -6px;
+}

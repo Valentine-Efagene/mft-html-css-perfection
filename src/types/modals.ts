@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-type IModalType = "ok" | "warning" | "error";
+type IModalType = "ok" | "warning" | "error" | "text";
 
 interface IModalProps {
   className?: string;
@@ -8,7 +8,6 @@ interface IModalProps {
   onCancel: () => void;
   show: boolean;
   children?: ReactElement | string | ReactElement[];
-  type: IModalType;
 }
 
 interface ISimplifiedModalProps {
@@ -26,6 +25,7 @@ interface IConfirmationModalProps extends IModalProps {
   cancellationPrompt?: string;
   confirmationPrompt?: string;
 }
+
 export type {
   IModalType,
   IModalProps,

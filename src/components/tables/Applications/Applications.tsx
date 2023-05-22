@@ -4,7 +4,7 @@ import styles from "./Applications.module.css";
 import Checkbox from "../../common/inputs/Checkbox/Checkbox";
 
 interface IApplicationsProps {
-  data?: IApplication[];
+  data: IApplication[];
   checked: boolean[];
   setChecked: Dispatch<SetStateAction<boolean[]>>;
 }
@@ -118,7 +118,7 @@ function Applications({ data, checked, setChecked }: IApplicationsProps) {
           </tbody>
         )}
       </table>
-      {data == null && (
+      {Array.isArray(data) && data?.length < 1 && (
         <div className={styles.empty}>조회 결과가 없습니다.</div>
       )}
     </div>
