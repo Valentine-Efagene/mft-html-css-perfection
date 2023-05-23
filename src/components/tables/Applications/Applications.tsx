@@ -4,6 +4,8 @@ import styles from "./Applications.module.css";
 import Checkbox from "../../common/inputs/Checkbox/Checkbox";
 
 interface IApplicationsProps {
+  limit: number;
+  page: number;
   data: IApplication[];
   checked: boolean[];
   disabled: boolean[];
@@ -13,6 +15,8 @@ interface IApplicationsProps {
 function Applications({
   data,
   checked,
+  limit,
+  page,
   disabled,
   setChecked,
 }: IApplicationsProps) {
@@ -54,6 +58,7 @@ function Applications({
         {Array.isArray(data) && data.length > 0 && (
           <tbody>
             {data?.map((datum, index) => {
+              const pageAdjustedIndex = index + (page - 1) * limit;
               const {
                 no,
                 existingType,
@@ -94,9 +99,10 @@ function Applications({
                     <Checkbox
                       disabled={approval !== "승인대기"}
                       className={styles.checkbox}
-                      checked={checked[index]}
+                      checked={checked[pageAdjustedIndex]}
                       onChange={(e) => {
-                        handleCheck(index, e.currentTarget.checked);
+                        alert(checked.length);
+                        handleCheck(pageAdjustedIndex, e.currentTarget.checked);
                       }}
                     />
                   </td>

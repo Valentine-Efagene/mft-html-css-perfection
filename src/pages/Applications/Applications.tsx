@@ -9,7 +9,7 @@ import Paginator from "../../components/Paginator/Paginator";
 import { useSearchParams } from "react-router-dom";
 import FauxSelect from "../../components/common/inputs/FauxSelect/FauxSelect";
 import { IOptionValue } from "../../types/inputs";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import Confirmation from "../../components/modals/Confirmation/Confirmation";
 import { IApplication } from "../../types/data";
 
@@ -42,17 +42,20 @@ function Applications({ className, style }: IApplicationsProps) {
   const [activeModal, setActiveModal] = useState<modalName>("noApplicant");
   const [showModal, setShowModal] = useState(false);
   const [searchParams, _] = useSearchParams();
-  const _checked = Array(limit).fill(false);
+  const _checked = Array(_applications.length).fill(false);
   const _disabled = _applications.map(
     (application) => application.approval !== "승인대기"
   );
   const [disabled, setDisabled] = useState<boolean[]>(_disabled);
   const [checked, setChecked] = useState<boolean[]>(_checked);
   useState<IApplication | null>();
-  const resetChecks = () => setChecked(_checked);
 
   let _page: number = Number(searchParams.get("page")) ?? 1;
   _page = _page > 0 ? _page : 1;
+
+  const resetChecks = useCallback(() => {
+    () => setChecked(Array(applications.length).fill(false));
+  }, [applications]);
 
   const hideModal = () => setShowModal(false);
 
@@ -230,10 +233,11 @@ function Applications({ className, style }: IApplicationsProps) {
   };
 
   useEffect(() => {
+    resetChecks();
     setDisabled(
       applications.map((application) => application.approval !== "승인대기")
     );
-  }, [applications]);
+  }, [applications, resetChecks]);
 
   const handleLimitChange = (value: IOptionValue) => {
     setLimit((prevState) => Number(value) ?? prevState);
@@ -310,8 +314,10 @@ function Applications({ className, style }: IApplicationsProps) {
       </div>
 
       <ApplicationsTable
-        checked={checked.slice((_page - 1) * limit, _page * limit)}
-        disabled={disabled.slice((_page - 1) * limit, _page * limit)}
+        limit={limit}
+        page={_page}
+        checked={checked}
+        disabled={disabled}
         setChecked={setChecked}
         data={applications.slice((_page - 1) * limit, _page * limit)}
       />
