@@ -6,10 +6,16 @@ import Checkbox from "../../common/inputs/Checkbox/Checkbox";
 interface IApplicationsProps {
   data: IApplication[];
   checked: boolean[];
+  disabled: boolean[];
   setChecked: Dispatch<SetStateAction<boolean[]>>;
 }
 
-function Applications({ data, checked, setChecked }: IApplicationsProps) {
+function Applications({
+  data,
+  checked,
+  disabled,
+  setChecked,
+}: IApplicationsProps) {
   const handleCheck = (index: number, check: boolean) => {
     setChecked((prevState) => {
       const _prev = [...prevState];
@@ -20,7 +26,11 @@ function Applications({ data, checked, setChecked }: IApplicationsProps) {
 
   const checkAll: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.checked;
-    setChecked(Array(checked.length).fill(value));
+    setChecked(
+      checked.map((check, index) => {
+        return disabled[index] ? check : value;
+      })
+    );
   };
 
   return (
@@ -85,9 +95,9 @@ function Applications({ data, checked, setChecked }: IApplicationsProps) {
                       disabled={approval !== "승인대기"}
                       className={styles.checkbox}
                       checked={checked[index]}
-                      onChange={(e) =>
-                        handleCheck(index, e.currentTarget.checked)
-                      }
+                      onChange={(e) => {
+                        handleCheck(index, e.currentTarget.checked);
+                      }}
                     />
                   </td>
                   <td>{no}</td>

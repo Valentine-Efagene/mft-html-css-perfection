@@ -42,7 +42,7 @@
   margin-inline: 1.25rem;
 }
 
-.container label {
+.container .options > label {
   display: grid;
   align-items: center;
   grid-template-columns: auto 1fr;
@@ -56,13 +56,6 @@
 }
 
 .textArea {
-  background: #ffffff;
-  border: 1px solid #b1b4bb;
-  border-radius: 8px;
-  padding: 1rem;
-}
-
-.textArea:disabled {
   background: #dde0e6;
   border: 1px solid #b1b4bb;
   border-radius: 8px;

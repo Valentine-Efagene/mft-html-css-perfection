@@ -5,11 +5,12 @@ interface ICardRow {
   title: string;
   children?: ReactElement | string;
   required?: boolean;
+  className?: string;
 }
 
-function CardRow({ title, required = false, children }: ICardRow) {
+function CardRow({ title, required = false, children, className }: ICardRow) {
   return (
-    <div className={styles.container}>
+    <div className={`${className} ${styles.container}`}>
       <div className={styles.left}>
         <span
           className={`${styles.titleSpan} ${required ? styles.required : ""}`}

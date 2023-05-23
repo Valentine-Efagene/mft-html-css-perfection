@@ -9,7 +9,7 @@ import Paginator from "../../components/Paginator/Paginator";
 import { useSearchParams } from "react-router-dom";
 import FauxSelect from "../../components/common/inputs/FauxSelect/FauxSelect";
 import { IOptionValue } from "../../types/inputs";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Confirmation from "../../components/modals/Confirmation/Confirmation";
 import { IApplication } from "../../types/data";
 
@@ -25,7 +25,8 @@ type modalName =
   | "changeApprovalStatus"
   | "alreadyApproved"
   | "alreadyDenied"
-  | "saved";
+  | "saved"
+  | "reasonForRejection";
 
 const TOTAL = _applications.length;
 
@@ -41,7 +42,13 @@ function Applications({ className, style }: IApplicationsProps) {
   const [showModal, setShowModal] = useState(false);
   const [searchParams, _] = useSearchParams();
   const _checked = Array(limit).fill(false);
+  const _disabled = _applications.map(
+    (application) => application.approval !== "승인대기"
+  );
+  const [disabled, setDisabled] = useState<boolean[]>(_disabled);
   const [checked, setChecked] = useState<boolean[]>(_checked);
+  const [activeApplication, setActiveApplication] =
+    useState<IApplication | null>();
   const resetChecks = () => setChecked(_checked);
 
   let _page: number = Number(searchParams.get("page")) ?? 1;
@@ -67,7 +74,12 @@ function Applications({ className, style }: IApplicationsProps) {
         show={showModal}
         onCancel={hideModal}
         onConfirm={() => {
-          save();
+          if (approvalStatus === "승인거부" && selected === 1) {
+            setActiveModal("reasonForRejection");
+            displayModal();
+          } else {
+            save();
+          }
           hideModal();
         }}
         type="warning"
@@ -104,6 +116,13 @@ function Applications({ className, style }: IApplicationsProps) {
         prompt="저장되었습니다."
         confirmationPrompt="확인"
         onConfirm={hideModal}
+      />
+    ),
+    reasonForRejection: (
+      <InvestmentTypeChange
+        show={showModal}
+        application={applications[checked.findIndex((check) => check)]}
+        onCancel={hideModal}
       />
     ),
   };
@@ -190,18 +209,24 @@ function Applications({ className, style }: IApplicationsProps) {
     });
   };
 
+  useEffect(() => {
+    setDisabled(
+      applications.map((application) => application.approval !== "승인대기")
+    );
+  }, [applications]);
+
   const handleLimitChange = (value: IOptionValue) => {
     setLimit(Number(value) ?? 50);
   };
 
   return (
     <div className={`${styles.container} ${className}`} style={style}>
-      <InvestmentTypeChange
-        show={true}
-        application={applications[0]}
-        onCancel={() => console.log("first")}
-      />
       {modalMap[activeModal]}
+      {/* <InvestmentTypeChange
+        show={true}
+        application={applications[checked.findIndex((check) => check)]}
+        onCancel={hideModal}
+      /> */}
       <div className={styles.toolbar}>
         <div className={styles.titleWrapper}>
           <span className={styles.title}>신청 목록</span>
@@ -256,6 +281,7 @@ function Applications({ className, style }: IApplicationsProps) {
 
       <ApplicationsTable
         checked={checked}
+        disabled={disabled}
         setChecked={setChecked}
         data={applications
           .map((app, index) => ({ ...app, no: index + 1 }))

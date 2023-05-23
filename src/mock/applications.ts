@@ -39,7 +39,7 @@ const applications: IApplication[] = [
     applicationType: "소득적격",
     documentsToBeSubmitted: "",
     applicationDate: "2023-01-10 09:00:00",
-    approval: "승인완료",
+    approval: "승인대기",
     reasonForRefusalOfApproval: null,
     approvalDate: "2023-01-10 09:00:00",
   },
