@@ -310,8 +310,8 @@ function Applications({ className, style }: IApplicationsProps) {
       </div>
 
       <ApplicationsTable
-        checked={checked}
-        disabled={disabled}
+        checked={checked.slice((_page - 1) * limit, _page * limit)}
+        disabled={disabled.slice((_page - 1) * limit, _page * limit)}
         setChecked={setChecked}
         data={applications.slice((_page - 1) * limit, _page * limit)}
       />
