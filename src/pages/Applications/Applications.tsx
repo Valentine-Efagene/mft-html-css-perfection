@@ -236,7 +236,7 @@ function Applications({ className, style }: IApplicationsProps) {
   }, [applications]);
 
   const handleLimitChange = (value: IOptionValue) => {
-    setLimit(Number(value) ?? 50);
+    setLimit((prevState) => Number(value) ?? prevState);
   };
 
   return (
@@ -282,6 +282,7 @@ function Applications({ className, style }: IApplicationsProps) {
           </FauxSelect>
           <FauxSelect onChange={handleLimitChange} value={limit}>
             <option value={50}>승인상태 변경</option>
+            <option value={100}>승인상태 변경</option>
           </FauxSelect>
         </div>
       </div>
@@ -312,9 +313,7 @@ function Applications({ className, style }: IApplicationsProps) {
         checked={checked}
         disabled={disabled}
         setChecked={setChecked}
-        data={applications
-          .map((app, index) => ({ ...app, no: index + 1 }))
-          .slice((_page - 1) * limit, _page * limit)}
+        data={applications.slice((_page - 1) * limit, _page * limit)}
       />
       <Paginator
         limit={limit}
