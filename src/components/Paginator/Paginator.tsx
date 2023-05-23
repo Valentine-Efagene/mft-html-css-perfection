@@ -17,7 +17,7 @@ interface IPaginator {
 
 function Paginator({ page, url, total, limit }: IPaginator) {
   const generateNewPath = (newPage: number) => {
-    return `${url}?${QueryParamsHelper.generateProfessionQueryParams({
+    return `${url}?${QueryParamsHelper.generateQueryParams({
       page: newPage,
     })}`;
   };
