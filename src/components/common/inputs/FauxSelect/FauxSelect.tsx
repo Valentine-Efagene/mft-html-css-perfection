@@ -1,5 +1,5 @@
 import styles from "./FauxSelect.module.css";
-import React, { useState, useRef, RefObject, ReactElement } from "react";
+import { useState, useRef, RefObject, ReactElement } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import useOnClickOutside from "../../../../hooks/useOnClickOutside";
 import { IOPtion, IOptionValue } from "../../../../types/inputs";
@@ -11,7 +11,7 @@ interface IFauxSelectProps {
   style?: object;
   value: IOptionValue;
   defaultValue?: string | number;
-  onChange: (option: IOptionValue) => void;
+  onChange: (_: IOptionValue) => void;
   options?: IOPtion[];
   children: ReactElement[] | ReactElement;
 }

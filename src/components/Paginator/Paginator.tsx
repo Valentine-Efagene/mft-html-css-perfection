@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import QueryParamsHelper from "../../helpers/QueryParamsHelper";
 import styles from "./Paginator.module.css";

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, ChangeEventHandler } from "react";
+import { Dispatch, SetStateAction, ChangeEventHandler } from "react";
 import { IApplication } from "../../../types/data";
 import styles from "./Applications.module.css";
 import Checkbox from "../../common/inputs/Checkbox/Checkbox";

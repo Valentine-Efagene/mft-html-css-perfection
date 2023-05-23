@@ -1,1 +1,1 @@
-export { default } from "./Applications";
+export { default } from "./NotFound";
