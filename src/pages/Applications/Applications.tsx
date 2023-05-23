@@ -316,7 +316,12 @@ function Applications({ className, style }: IApplicationsProps) {
           .map((app, index) => ({ ...app, no: index + 1 }))
           .slice((_page - 1) * limit, _page * limit)}
       />
-      <Paginator limit={limit} page={_page} url="/applications" total={TOTAL} />
+      <Paginator
+        limit={limit}
+        page={_page}
+        url="/investment-management"
+        total={TOTAL}
+      />
     </div>
   );
 }
