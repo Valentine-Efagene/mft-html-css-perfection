@@ -5,13 +5,13 @@ import NotFound from "../pages/NotFound/NotFound";
 
 const router = createBrowserRouter([
   {
+    path: "",
+    element: <Navigate to="/investment-management" />,
+  },
+  {
     path: "/",
     element: <App />,
     children: [
-      {
-        path: "",
-        element: <Navigate to="/investment-management" />,
-      },
       {
         path: "/investment-management",
         element: <Applications />,
