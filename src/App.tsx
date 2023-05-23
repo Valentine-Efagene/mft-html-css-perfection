@@ -9,7 +9,7 @@ const tabs = [
     title: "기본정보 관리",
   },
   {
-    to: "/applications",
+    to: "/investment-management",
     title: "투자유형 관리",
   },
   {
