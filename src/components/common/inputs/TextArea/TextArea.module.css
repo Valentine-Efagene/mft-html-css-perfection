@@ -1,0 +1,35 @@
+.container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.container::-webkit-scrollbar-track {
+  transition: 2s all;
+  background: #e6e8ea;
+  border-radius: 20px;
+  transform: matrix(0, 1, 1, 0, 0, 0);
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: #6f80a0;
+  border-radius: 20px;
+  transform: matrix(0, 1, 1, 0, 0, 0);
+  cursor: pointer;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+}
+
+.container {
+  background: #ffffff;
+  border: 1px solid #b1b4bb;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.container:focus-visible {
+  outline: 1px solid #b1b4bb;
+}
+
+.container:disabled {
+  background-color: #b1b4bb;
+}

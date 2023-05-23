@@ -14,6 +14,7 @@ import Confirmation from "../../components/modals/Confirmation/Confirmation";
 import { IApplication } from "../../types/data";
 
 import InvestmentTypeChange from "../../components/modals/InvestmentTypeChange/InvestmentTypeChange";
+import EnterTheReasonForApprovalRefusal from "../../components/modals/EnterTheReasonForApprovalRefusal/EnterTheReasonForApprovalRefusal";
 
 interface IApplicationsProps {
   className?: string;
@@ -47,14 +48,32 @@ function Applications({ className, style }: IApplicationsProps) {
   );
   const [disabled, setDisabled] = useState<boolean[]>(_disabled);
   const [checked, setChecked] = useState<boolean[]>(_checked);
-  const [activeApplication, setActiveApplication] =
-    useState<IApplication | null>();
+  useState<IApplication | null>();
   const resetChecks = () => setChecked(_checked);
 
   let _page: number = Number(searchParams.get("page")) ?? 1;
   _page = _page > 0 ? _page : 1;
 
   const hideModal = () => setShowModal(false);
+
+  function save() {
+    setApplications((prevState) => {
+      const _prev = [...prevState];
+
+      const result = _prev.map((application, index) => {
+        if (checked[index] === true) {
+          application.approval = approvalStatus as string;
+          return application;
+        }
+
+        return application;
+      });
+
+      return result;
+    });
+
+    resetChecks();
+  }
 
   const modalMap: { [modalName: string]: ReactNode } = {
     noApplicant: (
@@ -74,13 +93,14 @@ function Applications({ className, style }: IApplicationsProps) {
         show={showModal}
         onCancel={hideModal}
         onConfirm={() => {
-          if (approvalStatus === "승인거부" && selected === 1) {
+          if (approvalStatus === "승인거부" && countSelected() === 1) {
             setActiveModal("reasonForRejection");
+            hideModal();
             displayModal();
           } else {
             save();
+            hideModal();
           }
-          hideModal();
         }}
         type="warning"
         confirmationPrompt="확인"
@@ -119,47 +139,47 @@ function Applications({ className, style }: IApplicationsProps) {
       />
     ),
     reasonForRejection: (
-      <InvestmentTypeChange
+      <EnterTheReasonForApprovalRefusal
         show={showModal}
         application={applications[checked.findIndex((check) => check)]}
         onCancel={hideModal}
+        onConfirm={() => {
+          save();
+          hideModal();
+        }}
+      />
+    ),
+    investmentTypeChange: (
+      <InvestmentTypeChange
+        investmentType=""
+        setInvestmentType={() => {
+          console.log("first");
+        }}
+        show={showModal}
+        application={applications[checked.findIndex((check) => check)]}
+        onCancel={hideModal}
+        onConfirm={() => {
+          save();
+          hideModal();
+        }}
       />
     ),
   };
 
   const displayModal = () => setShowModal(true);
 
-  const selected: number = checked.filter((check) => check === true).length;
+  const countSelected = () => checked.filter((check) => check === true).length;
 
   const checkSelected = (value: IOptionValue) => {
     if (value === "") return;
 
-    if (selected < 1) {
+    if (countSelected() < 1) {
       setActiveModal("noApplicant");
       displayModal();
     }
   };
 
   const resetApplications = () => setApplications(_applications);
-
-  const save = () => {
-    setApplications((prevState) => {
-      const _prev = [...prevState];
-
-      const result = _prev.map((application, index) => {
-        if (checked[index] === true) {
-          application.approval = approvalStatus as string;
-          return application;
-        }
-
-        return application;
-      });
-
-      return result;
-    });
-
-    resetChecks();
-  };
 
   /**
    * Filter
@@ -227,6 +247,15 @@ function Applications({ className, style }: IApplicationsProps) {
         application={applications[checked.findIndex((check) => check)]}
         onCancel={hideModal}
       /> */}
+      {/* <InvestmentTypeChange
+        show={true}
+        application={applications[checked.findIndex((check) => check)]}
+        onCancel={hideModal}
+        onConfirm={() => {
+          save();
+          hideModal();
+        }}
+      /> */}
       <div className={styles.toolbar}>
         <div className={styles.titleWrapper}>
           <span className={styles.title}>신청 목록</span>
@@ -259,7 +288,7 @@ function Applications({ className, style }: IApplicationsProps) {
       <div className={styles.selectPanel}>
         <Button>등록</Button>
         <div className={styles.actions}>
-          <span className={styles.status}>선택한 {selected}건</span>
+          <span className={styles.status}>선택한 {countSelected()}건</span>
           <FauxSelect
             onChange={handleApprovalStatusChange}
             value={approvalStatus}

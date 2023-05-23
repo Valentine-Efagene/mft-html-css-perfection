@@ -15,6 +15,27 @@
   -webkit-text-size-adjust: 100%;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  transition: 2s all;
+  background: #e6e8ea;
+  border-radius: 20px;
+  transform: matrix(0, 1, 1, 0, 0, 0);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6f80a0;
+  border-radius: 20px;
+  transform: matrix(0, 1, 1, 0, 0, 0);
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:hover {
+}
+
 html,
 body,
 * {

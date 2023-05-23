@@ -2,16 +2,22 @@ import { IApplication } from "../../../types/data";
 import { IModalProps } from "../../../types/modals";
 import Button from "../../common/inputs/Button/Button";
 import Checkbox from "../../common/inputs/Checkbox/Checkbox";
+import TextArea from "../../common/inputs/TextArea/TextArea";
 import Modal from "../../common/modal/Modal/Modal";
 import CardRow from "../parts/CardRow/CardRow";
-import styles from "./InvestmentTypeChange.module.css";
+import styles from "./EnterTheReasonForApprovalRefusal.module.css";
 import { GrClose } from "react-icons/gr";
 
-interface IInvestmentTypeChangeProps extends IModalProps {
+interface IEnterTheReasonForApprovalRefusalProps extends IModalProps {
   application: IApplication;
+  onConfirm: () => void;
 }
 
-function InvestmentTypeChange({ show, onCancel }: IInvestmentTypeChangeProps) {
+function EnterTheReasonForApprovalRefusal({
+  show,
+  onCancel,
+  onConfirm,
+}: IEnterTheReasonForApprovalRefusalProps) {
   return (
     <Modal className={styles.container} show={show} onCancel={onCancel}>
       <div className={styles.header}>
@@ -48,22 +54,24 @@ function InvestmentTypeChange({ show, onCancel }: IInvestmentTypeChangeProps) {
               <Checkbox />
               <span>직접 입력</span>
             </label>
-            <textarea
+            <TextArea
               name=""
               id=""
               rows={5}
               className={styles.textArea}
               placeholder="사유 입력"
-            ></textarea>
+            ></TextArea>
           </div>
         </CardRow>
       </div>
       <div className={styles.footer}>
-        <Button>저장</Button>
-        <Button variant="outline">취소</Button>
+        <Button onClick={onConfirm}>저장</Button>
+        <Button variant="outline" onClick={onCancel}>
+          취소
+        </Button>
       </div>
     </Modal>
   );
 }
 
-export default InvestmentTypeChange;
+export default EnterTheReasonForApprovalRefusal;
