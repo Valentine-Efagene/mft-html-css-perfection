@@ -99,7 +99,10 @@ function Applications({
                     <Checkbox
                       disabled={approval !== "승인대기"}
                       className={styles.checkbox}
-                      checked={checked[pageAdjustedIndex]}
+                      checked={
+                        checked[pageAdjustedIndex] &&
+                        !disabled[pageAdjustedIndex]
+                      }
                       onChange={(e) => {
                         handleCheck(pageAdjustedIndex, e.currentTarget.checked);
                       }}
