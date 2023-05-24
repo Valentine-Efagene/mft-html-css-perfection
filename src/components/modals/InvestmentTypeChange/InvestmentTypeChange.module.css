@@ -42,6 +42,91 @@
   border-bottom: 1px solid #d7d8da;
 }
 
+.right {
+  overflow-x: hidden;
+  padding-right: 1rem;
+}
+
+.fileSection::-webkit-scrollbar {
+  height: 3px;
+}
+
+.fileSection::-webkit-scrollbar-track {
+  transition: 2s all;
+  background: #e6e8ea;
+  border-radius: 20px;
+  transform: matrix(0, 1, 1, 0, 0, 0);
+}
+
+.fileSection::-webkit-scrollbar-thumb {
+  background: #6f80a0;
+  border-radius: 20px;
+  transform: matrix(0, 1, 1, 0, 0, 0);
+  cursor: pointer;
+}
+
+.fileSection::-webkit-scrollbar-thumb:hover {
+}
+
+.fileSection {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  width: 100%;
+  max-width: 100%;
+}
+
+.proofs {
+  display: flex;
+}
+
+.proofItem:not(:first-child) {
+  margin-left: 1rem;
+}
+
+.proofItem {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.proofItem .name {
+  overflow: hidden;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.02px;
+  text-decoration-line: underline;
+  color: #5a616a;
+  white-space: nowrap;
+  width: 12ch;
+  text-overflow: ellipsis;
+}
+
+.proofItem button {
+  background-color: #00000000;
+  border: none;
+}
+
+.proofItem .remove {
+}
+
+.proofItem .remove .icon {
+  font-size: 15px;
+}
+
+.proof {
+  padding: 10px 12px;
+  background: #ebeef3;
+  border: 1px solid #d7d8da;
+  border-radius: 8px;
+  color: #000;
+  width: fit-content;
+  white-space: nowrap;
+  height: fit-content;
+}
+
 .header .closeBtn {
   border: none;
   font-size: 12px;

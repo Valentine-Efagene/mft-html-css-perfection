@@ -1,0 +1,11 @@
+.container {
+}
+
+.container menu {
+  list-style: none;
+  display: flex;
+}
+
+.container menu li:not(:first-child) {
+  margin-left: 1rem;
+}

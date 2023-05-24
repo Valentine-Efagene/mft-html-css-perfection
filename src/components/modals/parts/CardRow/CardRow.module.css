@@ -19,6 +19,7 @@
 .left {
   background: #eef0f4;
   padding-right: 1.5rem;
+  white-space: nowrap;
 }
 
 .left,

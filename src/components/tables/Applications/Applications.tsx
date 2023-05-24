@@ -101,7 +101,6 @@ function Applications({
                       className={styles.checkbox}
                       checked={checked[pageAdjustedIndex]}
                       onChange={(e) => {
-                        alert(checked.length);
                         handleCheck(pageAdjustedIndex, e.currentTarget.checked);
                       }}
                     />

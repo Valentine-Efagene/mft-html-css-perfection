@@ -246,20 +246,6 @@ function Applications({ className, style }: IApplicationsProps) {
   return (
     <div className={`${styles.container} ${className}`} style={style}>
       {modalMap[activeModal]}
-      {/* <InvestmentTypeChange
-        show={true}
-        application={applications[checked.findIndex((check) => check)]}
-        onCancel={hideModal}
-      /> */}
-      {/* <InvestmentTypeChange
-        show={true}
-        application={applications[checked.findIndex((check) => check)]}
-        onCancel={hideModal}
-        onConfirm={() => {
-          save();
-          hideModal();
-        }}
-      /> */}
       <div className={styles.toolbar}>
         <div className={styles.titleWrapper}>
           <span className={styles.title}>신청 목록</span>

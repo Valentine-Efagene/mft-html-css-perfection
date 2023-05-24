@@ -6,19 +6,28 @@ interface ICardRow {
   children?: ReactElement | string;
   required?: boolean;
   className?: string;
+  rightClassName?: string;
+  leftClassName?: string;
 }
 
-function CardRow({ title, required = false, children, className }: ICardRow) {
+function CardRow({
+  title,
+  rightClassName,
+  leftClassName,
+  required = false,
+  children,
+  className,
+}: ICardRow) {
   return (
     <div className={`${className} ${styles.container}`}>
-      <div className={styles.left}>
+      <div className={`${leftClassName} ${styles.left}`}>
         <span
           className={`${styles.titleSpan} ${required ? styles.required : ""}`}
         >
           {title}
         </span>
       </div>
-      <div className={styles.right}>{children}</div>
+      <div className={`${rightClassName} ${styles.right}`}>{children}</div>
     </div>
   );
 }
