@@ -22,7 +22,7 @@ function EnterTheReasonForApprovalRefusal({
     <Modal className={styles.container} show={show} onCancel={onCancel}>
       <div className={styles.header}>
         <span>투자유형 변경</span>
-        <button className={styles.closeBtn}>
+        <button className={styles.closeBtn} onClick={onCancel}>
           <GrClose />
         </button>
       </div>
