@@ -66,6 +66,23 @@
   color: #5a616a;
 }
 
+.linkToModals {
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 18px;
+  letter-spacing: 0.03em;
+  color: #222222;
+  transition: 300ms;
+}
+
+.linkToModals:hover {
+  text-decoration: underline;
+}
+
 @media screen and (max-width: 780px) {
   .toolbar,
   .selectPanel {

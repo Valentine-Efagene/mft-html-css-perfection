@@ -6,7 +6,7 @@ import {
 } from "../../mock/applications";
 import Button from "../../components/common/inputs/Button/Button";
 import Paginator from "../../components/Paginator/Paginator";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import FauxSelect from "../../components/common/inputs/FauxSelect/FauxSelect";
 import { IOptionValue } from "../../types/inputs";
 import { ReactNode, useCallback, useEffect, useState } from "react";
@@ -313,6 +313,10 @@ function Applications({ className, style }: IApplicationsProps) {
         url="/investment-management"
         total={TOTAL}
       />
+
+      <Link to="/modals" className={styles.linkToModals}>
+        다른 모달
+      </Link>
     </div>
   );
 }

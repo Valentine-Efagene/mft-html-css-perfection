@@ -6,17 +6,21 @@ import ModalViewer from "../pages/ModalViewer/ModalViewer";
 
 const router = createBrowserRouter([
   {
-    path: "/modals",
-    element: <ModalViewer />,
+    path: "",
+    element: <Applications />,
   },
   {
-    path: "",
-    element: <Navigate to="/investment-management" />,
+    path: "/modals",
+    element: <ModalViewer />,
   },
   {
     path: "/",
     element: <App />,
     children: [
+      {
+        path: "/",
+        element: <Applications />,
+      },
       {
         path: "/investment-management",
         element: <Applications />,

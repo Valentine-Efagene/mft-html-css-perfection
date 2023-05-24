@@ -20,7 +20,7 @@
 }
 
 .container {
-  width: 90%;
+  width: fit-content;
   padding: 0;
   display: grid;
   grid-template-columns: 1fr;
@@ -51,6 +51,7 @@
 }
 
 .content {
+  padding-right: 1.25rem;
   border: 1px solid #d7d8da;
   font-family: "Pretendard";
   font-style: normal;

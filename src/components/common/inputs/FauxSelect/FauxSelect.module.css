@@ -65,7 +65,7 @@
   margin: 5px 0 0 0;
   top: 100%;
   left: 0;
-  width: fit-content;
+  width: 100%;
   position: absolute;
 
   transition: 300ms;
